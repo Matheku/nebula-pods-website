@@ -16,10 +16,7 @@
             aurora: '#06b6d4',
             starlight: '#f8fafc'
           },
-          fontFamily: {
-            sans: ['Inter', 'system-ui'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
+          fontFamily: { sans: ['Inter', 'system-ui'], mono: ['JetBrains Mono', 'monospace'] }
         }
       }
     }
@@ -30,39 +27,39 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
     body, html { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Inter', system-ui, sans-serif; background: #0a0f1a; }
-    .gradient-bg { background: radial-gradient(ellipse at top left, rgba(99,102,241,0.15), transparent 50%), radial-gradient(ellipse at bottom right, rgba(139,92,246,0.1), transparent 50%); }
     .sticky-section { height: 100vh; position: sticky; top: 0; overflow: hidden; }
-    .image-layer { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; }
-    .image-layer::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,15,26,0.4), transparent 40%, rgba(10,15,26,0.7)); }
+    .image-layer { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    .image-layer::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,15,26,0.4), transparent 50%, rgba(10,15,26,0.7)); }
     .content-layer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 2rem; z-index: 10; }
     .glass-card { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
-    .progress-bar { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(99,102,241,0.2); transform-origin: left; transform: scaleX(0); z-index: 1000; }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(99,102,241,0.2); transform-origin: left; z-index: 1000; }
     .progress-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4); }
     .neon-glow { box-shadow: 0 0 30px rgba(99,102,241,0.3); }
     .text-glow { text-shadow: 0 0 20px rgba(99,102,241,0.5); }
     .product-orb { width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #6366f1, #8b5cf6, #06b6d4); box-shadow: 0 0 40px rgba(99,102,241,0.4), inset 0 0 20px rgba(0,0,0,0.3); }
+    .fade-overlay { position: absolute; inset: 0; background: #0a0f1a; opacity: 0; pointer-events: none; z-index: 5; }
   </style>
 </head>
-<body class="gradient-bg">
+<body>
   <div class="progress-bar" id="progress-bar"><div class="progress-fill"></div></div>
 
   <!-- Navigation dots -->
-  <div class="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50 glass-card px-3 py-2 rounded-full" id="nav-dots">
-    <button class="w-2 h-2 rounded-full bg-nebula dot-btn active" data-section="0"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="1"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="2"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="3"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="4"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="5"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="6"></button>
-    <button class="w-2 h-2 rounded-full bg-white/20 dot-btn" data-section="7"></button>
+  <div class="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-50 glass-card px-3 py-1.5 rounded-full">
+    <button class="w-2 h-2 rounded-full bg-nebula nav-dot active" data-section="0"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="1"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="2"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="3"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="4"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="5"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="6"></button>
+    <button class="w-2 h-2 rounded-full bg-white/30 nav-dot" data-section="7"></button>
   </div>
 
-  <!-- Hero + Features Crossfade (both layers sticky) -->
-  <main id="main-container" style="height: 200vh;">
+  <!-- Combined Hero + Features Crossfade -->
+  <div id="hero-section" style="height: 200vh;">
     <div class="sticky-section">
-      <!-- Background images with smooth fade transitions -->
-      <div class="image-layer" id="hero-img" style="background-image: url('https://images.unsplash.com/photo-1517842461903-4a950a8d0c10?auto=format&fit=crop&w=2000&q=90'); opacity: 1;"></div>
+      <div class="image-layer" id="hero-img" style="background-image: url('https://images.unsplash.com/photo-1517842461903-4a950a8d0c10?auto=format&fit=crop&w=2000&q=90');"></div>
+      <div class="fade-overlay" id="fade-overlay"></div>
 
       <!-- Hero content -->
       <div class="content-layer">
@@ -74,15 +71,15 @@
         </div>
       </div>
 
-      <!-- Features overlay (fade in as hero fades out) -->
-      <div class="content-layer" style="opacity: 0;" id="features-layer">
-        <div class="max-w-6xl mx-auto px-6 w-full">
-          <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">Intelligent Features</h2>
+      <!-- Features overlay -->
+      <div class="content-layer opacity-0 pointer-events-none" id="features-layer">
+        <div class="max-w-5xl mx-auto px-6 w-full">
+          <h2 class="text-3xl md:text-5xl font-bold text-center mb-10 text-glow">Intelligent Features</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="glass-card p-6 rounded-3xl opacity-0 translate-y-8">
               <div class="w-12 h-12 rounded-full bg-nebula/20 flex items-center justify-center mb-3">
                 <svg class="w-7 h-7 text-nebula" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.667 17l-4.333-2.5V9.5L9.667 7v10z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.667 17l-4.333-2.5V9.5L9.667 7v10z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.333 17l4.333-2.5V9.5L14.333 7v10z"/>
                 </svg>
               </div>
               <h3 class="text-xl font-bold mb-2">Biometric Sensing</h3>
@@ -110,60 +107,48 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 
   <!-- How It Works - Pinned Product -->
-  <section class="sticky-section h-screen" id="how-it-works" style="height: 300vh;">
-    <div class="relative h-full">
-      <div class="absolute inset-0 flex items-center justify-center" id="product-display">
-        <div class="relative w-96 h-96">
-          <div class="absolute inset-0 rounded-full bg-gradient-to-r from-nebula to-cosmos opacity-20 blur-3xl"></div>
-          <div class="relative w-full h-full rounded-full bg-void border border-white/10 flex items-center justify-center neon-glow">
-            <div class="product-orb"></div>
-          </div>
+  <section class="sticky-section" id="how-it-works" style="height: 300vh;">
+    <div class="relative h-full flex items-center justify-center">
+      <div class="relative w-96 h-96" id="product-display">
+        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-nebula via-cosmos to-aurora opacity-20 blur-3xl"></div>
+        <div class="relative w-full h-full rounded-full bg-void border border-white/10 flex items-center justify-center neon-glow">
+          <div class="product-orb"></div>
         </div>
       </div>
-      <div class="content-layer">
-        <div class="max-w-md text-right translate-x-full opacity-0 absolute right-16 top-1/3" id="step-1">
-          <h3 class="text-2xl font-bold mb-2 text-nebula">Sense</h3>
-          <p class="text-white/70">AI analyzes air quality 1000× per second</p>
-        </div>
+      <div class="absolute right-16 top-1/3 max-w-md text-right translate-x-full opacity-0" id="step-1">
+        <h3 class="text-2xl font-bold mb-2 text-nebula">Sense</h3>
+        <p class="text-white/70">AI analyzes air quality 1000× per second</p>
       </div>
-      <div class="content-layer">
-        <div class="max-w-md text-left -translate-x-full opacity-0 absolute left-16 top-1/3" id="step-2">
-          <h3 class="text-2xl font-bold mb-2 text-cosmos">Purify</h3>
-          <p class="text-white/70">Removes 99.97% of pollutants</p>
-        </div>
+      <div class="absolute left-16 top-1/3 max-w-md text-left -translate-x-full opacity-0" id="step-2">
+        <h3 class="text-2xl font-bold mb-2 text-cosmos">Purify</h3>
+        <p class="text-white/70">Removes 99.97% of pollutants</p>
       </div>
-      <div class="content-layer">
-        <div class="max-w-md text-right translate-x-full opacity-0 absolute right-16 top-1/3" id="step-3">
-          <h3 class="text-2xl font-bold mb-2 text-aurora">Harmonize</h3>
-          <p class="text-white/70">Ambient light matches your circadian rhythm</p>
-        </div>
+      <div class="absolute right-16 top-1/3 max-w-md text-right translate-x-full opacity-0" id="step-3">
+        <h3 class="text-2xl font-bold mb-2 text-aurora">Harmonize</h3>
+        <p class="text-white/70">Ambient light matches your circadian rhythm</p>
       </div>
     </div>
   </section>
 
-  <!-- Technical Specs -->
-  <section class="h-screen flex items-center justify-center" id="specs">
+  <!-- Stats / Specs -->
+  <section class="h-screen flex items-center justify-center" id="stats">
     <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl md:text-5xl font-bold text-center mb-12 opacity-0">Technical Specs</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <h2 class="text-3xl md:text-5xl font-bold text-center mb-12 opacity-0">By the Numbers</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div class="text-center opacity-0 translate-y-8">
-          <div class="text-4xl font-black text-nebula mb-2 font-mono" id="counter-1">0</div>
-          <p class="text-white/60 text-sm">SQ FT Coverage</p>
+          <div class="text-5xl font-black text-nebula mb-2 font-mono" id="st-counter-1">0</div><p class="text-white/60">SQ FT Coverage</p>
         </div>
         <div class="text-center opacity-0 translate-y-8">
-          <div class="text-4xl font-black text-cosmos mb-2 font-mono" id="counter-2">0</div>
-          <p class="text-white/60 text-sm">CFM Airflow</p>
+          <div class="text-5xl font-black text-cosmos mb-2 font-mono" id="st-counter-2">0</div><p class="text-white/60">CFM Airflow</p>
         </div>
         <div class="text-center opacity-0 translate-y-8">
-          <div class="text-4xl font-black text-aurora mb-2 font-mono" id="counter-3">0</div>
-          <p class="text-white/60 text-sm">Sensors</p>
+          <div class="text-5xl font-black text-aurora mb-2 font-mono" id="st-counter-3">0</div><p class="text-white/60">Sensors</p>
         </div>
         <div class="text-center opacity-0 translate-y-8">
-          <div class="text-4xl font-black text-purple-400 mb-2 font-mono" id="counter-4">0</div>
-          <p class="text-white/60 text-sm">Hours Runtime</p>
+          <div class="text-5xl font-black text-purple-400 mb-2 font-mono" id="st-counter-4">0</div><p class="text-white/60">Hours Runtime</p>
         </div>
       </div>
     </div>
@@ -174,17 +159,11 @@
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-3xl md:text-5xl font-bold text-center mb-8 opacity-0">Designed for Living</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-80 mb-6">
-        <div class="opacity-0 -rotate-6 translate-y-20 rounded-3xl overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1556911073-579f162d48ff?auto=format&fit=crop&w=800&q=80" alt="Living room" class="w-full h-full object-cover">
-        </div>
-        <div class="opacity-0 rotate-3 translate-y-20 rounded-3xl overflow-hidden mt-12">
-          <img src="https://images.unsplash.com/photo-1586023348072-54d958131351?auto=format&fit=crop&w=800&q=80" alt="Bedroom" class="w-full h-full object-cover">
-        </div>
-        <div class="opacity-0 -rotate-2 translate-y-20 rounded-3xl overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1581092914922-797d6c2f3a83?auto=format&fit=crop&w=800&q=80" alt="Office" class="w-full h-full object-cover">
-        </div>
+        <div class="opacity-0 rounded-3xl overflow-hidden" id="gal-1"><img src="https://images.unsplash.com/photo-1556911073-579f162d48ff?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
+        <div class="opacity-0 rounded-3xl overflow-hidden" id="gal-2"><img src="https://images.unsplash.com/photo-1586023348072-54d958131351?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
+        <div class="opacity-0 rounded-3xl overflow-hidden" id="gal-3"><img src="https://images.unsplash.com/photo-1581092914922-797d6c2f3a83?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
       </div>
-      <p class="text-center text-white/60 opacity-0 max-w-2xl mx-auto">Void Black, Aurora White, and Nebula Silver finishes.</p>
+      <p class="text-center text-white/60 opacity-0">Void Black, Aurora White, and Nebula Silver finishes.</p>
     </div>
   </section>
 
@@ -200,9 +179,7 @@
           <li class="flex items-center gap-2"><span class="w-2 h-2 bg-aurora rounded-full"></span> Active ionization neutralizes odors</li>
         </ul>
       </div>
-      <div class="opacity-0 scale-90">
-        <img src="https://images.unsplash.com/photo-1559756679-23430b9f3dc1?auto=format&fit=crop&w=800&q=80" alt="Tech" class="rounded-2xl">
-      </div>
+      <div class="opacity-0"><img src="https://images.unsplash.com/photo-1559756679-23430b9f3dc1?auto=format&fit=crop&w=800&q=80" class="rounded-2xl"></div>
     </div>
   </section>
 
@@ -210,7 +187,7 @@
   <section class="h-screen flex items-center justify-center" id="testimonials">
     <div class="max-w-4xl mx-auto px-6">
       <div class="glass-card p-8 rounded-3xl text-center opacity-0">
-        <p class="text-xl md:text-2xl italic mb-4">"Nebula Pods transformed my sleep quality. I wake up feeling refreshed for the first time in years."</p>
+        <p class="text-2xl md:text-3xl italic mb-4">"Transformed my sleep quality. I wake up refreshed for the first time in years."</p>
         <p class="text-white/60">— Alex Chen, Product Designer</p>
       </div>
     </div>
@@ -221,22 +198,9 @@
     <div class="max-w-5xl mx-auto px-6">
       <h2 class="text-3xl md:text-5xl font-bold text-center mb-10 opacity-0">Pricing</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass-card p-6 rounded-3xl text-center opacity-0 translate-y-8">
-          <h3 class="font-bold mb-3">Essential</h3><div class="text-3xl font-black text-nebula mb-3">$299</div>
-          <ul class="text-xs space-y-1 mb-4 text-white/60"><li>Basic purification</li><li>Mobile control</li><li>1-year warranty</li></ul>
-          <button class="px-5 py-2 rounded-full bg-nebula/20 text-sm">Learn More</button>
-        </div>
-        <div class="glass-card p-6 rounded-3xl text-center opacity-0 translate-y-8">
-          <div class="text-xs font-bold text-nebula mb-1">POPULAR</div>
-          <h3 class="font-bold mb-3">Pro</h3><div class="text-3xl font-black text-cosmos mb-3">$499</div>
-          <ul class="text-xs space-y-1 mb-4 text-white/60"><li>Full AI features</li><li>Circadian lighting</li><li>Room mapping</li><li>3-year warranty</li></ul>
-          <button class="px-5 py-2 rounded-full bg-gradient-to-r from-nebula to-cosmos text-sm">Get Pro</button>
-        </div>
-        <div class="glass-card p-6 rounded-3xl text-center opacity-0 translate-y-8">
-          <h3 class="font-bold mb-3">Max</h3><div class="text-3xl font-black text-aurora mb-3">$699</div>
-          <ul class="text-xs space-y-1 mb-4 text-white/60"><li>All Pro features</li><li>Dual pods</li><li>Smart home integration</li><li>Lifetime support</li></ul>
-          <button class="px-5 py-2 rounded-full bg-aurora/20 text-sm">Go Max</button>
-        </div>
+        <div class="glass-card p-6 rounded-3xl text-center opacity-0"><h3 class="font-bold mb-2">Essential</h3><div class="text-3xl font-black text-nebula mb-3">$299</div><ul class="text-xs space-y-1 mb-4 text-white/60"><li>Basic purification</li><li>Mobile control</li></ul><button class="px-5 py-2 rounded-full bg-nebula/20 text-xs">Learn More</button></div>
+        <div class="glass-card p-6 rounded-3xl text-center opacity-0"><div class="text-xs font-bold text-nebula mb-1">POPULAR</div><h3 class="font-bold mb-2">Pro</h3><div class="text-3xl font-black text-cosmos mb-3">$499</div><ul class="text-xs space-y-1 mb-4 text-white/60"><li>Full AI features</li><li>Circadian lighting</li><li>Room mapping</li></ul><button class="px-5 py-2 rounded-full bg-gradient-to-r from-nebula to-cosmos text-xs">Get Pro</button></div>
+        <div class="glass-card p-6 rounded-3xl text-center opacity-0"><h3 class="font-bold mb-2">Max</h3><div class="text-3xl font-black text-aurora mb-3">$699</div><ul class="text-xs space-y-1 mb-4 text-white/60"><li>All Pro features</li><li>Dual pods</li><li>Smart home integration</li></ul><button class="px-5 py-2 rounded-full bg-aurora/20 text-xs">Go Max</button></div>
       </div>
     </div>
   </section>
@@ -246,15 +210,11 @@
     <div class="text-center max-w-2xl px-6">
       <h2 class="text-4xl md:text-6xl font-black mb-6 opacity-0">Transform Your Atmosphere</h2>
       <p class="text-xl text-white/70 mb-8 opacity-0">Pre-order now and receive 20% off.</p>
-      <div class="opacity-0">
-        <button class="px-12 py-5 rounded-full bg-gradient-to-r from-nebula via-cosmos to-aurora font-bold text-lg neon-glow">Reserve Your Pod</button>
-      </div>
+      <div class="opacity-0"><button class="px-12 py-5 rounded-full bg-gradient-to-r from-nebula via-cosmos to-aurora font-bold text-lg neon-glow">Reserve Your Pod</button></div>
     </div>
   </section>
 
-  <footer class="h-24 flex items-center justify-center text-white/40">
-    <p>&copy; 2026 Nebula Labs</p>
-  </footer>
+  <footer class="h-24 flex items-center justify-center text-white/40"><p>&copy; 2026 Nebula Labs</p></footer>
 
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -273,35 +233,33 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const dots = document.querySelectorAll('.dot-btn');
+      // Hero to Features crossfade - smooth scrubbed transition
       const heroImg = document.getElementById('hero-img');
       const heroContent = document.getElementById('hero-content');
       const featuresLayer = document.getElementById('features-layer');
+      const fadeOverlay = document.getElementById('fade-overlay');
 
-      // Hero to Features crossfade - scrubbed to scroll
       ScrollTrigger.create({
-        trigger: '#main-container',
+        trigger: '#hero-section',
         start: 'top top',
-        end: '+=' + window.innerHeight,
-        scrub: 0.5,
+        end: 'bottom top',
+        scrub: 0.8,
         onUpdate: (self) => {
-          const progress = self.progress;
-          // Hero fades out while features fade in
-          gsap.set(heroImg, { opacity: 1 - progress });
-          gsap.set(heroContent, { opacity: 1 - progress });
-          gsap.set(featuresLayer, { opacity: progress });
+          const p = self.progress;
+          gsap.set(heroImg, { opacity: 1 - p });
+          gsap.set(heroContent, { opacity: 1 - p });
+          gsap.set(featuresLayer, { opacity: p });
+          gsap.set(fadeOverlay, { opacity: 1 - p });
 
-          // Stagger feature cards as features layer appears
-          if (progress > 0.3) {
-            gsap.to('.sticky-section .glass-card', {
-              opacity: 1, y: 0, stagger: 0.1, duration: 0.4,
-              ease: 'power3.out'
+          if (p > 0.4) {
+            gsap.to(['.glass-card.p-6', '#features-layer h2'], {
+              opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out'
             });
           }
         }
       });
 
-      // How It Works steps animation
+      // Steps animation
       const steps = ['#step-1', '#step-2', '#step-3'];
       ScrollTrigger.create({
         trigger: '#how-it-works',
@@ -309,56 +267,47 @@
         end: 'bottom top',
         pin: '#product-display',
         onUpdate: (self) => {
-          const progress = self.progress;
+          const p = self.progress;
           steps.forEach((step, i) => {
-            const stepProgress = progress * 3 - i;
-            const opacity = Math.max(0, Math.min(1, 1 - Math.abs(stepProgress)));
-            const x = i % 2 === 0 ? (stepProgress > 0 ? 0 : '100%') : (stepProgress > 0 ? 0 : '-100%');
-            gsap.set(step, { opacity, x });
+            const sp = p * 3 - i;
+            const o = Math.max(0, Math.min(1, 1 - Math.abs(sp)));
+            const x = i % 2 === 0 ? (sp > 0 ? 0 : '100%') : (sp > 0 ? 0 : '-100%');
+            gsap.set(step, { opacity: o, x });
           });
         }
       });
 
-      // Specs counters
-      const counters = [
-        { el: '#counter-1', value: 1200 },
-        { el: '#counter-2', value: 450 },
-        { el: '#counter-3', value: 12 },
-        { el: '#counter-4', value: 168 }
-      ];
-
+      // Stats
       ScrollTrigger.create({
-        trigger: '#specs',
-        start: 'top 85%',
+        trigger: '#stats',
+        start: 'top 88%',
         onEnter: () => {
-          counters.forEach((counter, i) => {
-            const obj = { val: 0 };
+          ['#st-counter-1', '#st-counter-2', '#st-counter-3', '#st-counter-4'].forEach((el, i) => {
+            const obj = { v: 0 };
             gsap.to(obj, {
-              val: counter.value,
-              duration: 1.2,
-              delay: i * 0.05,
-              ease: 'power2.out',
-              onUpdate: () => document.querySelector(counter.el).textContent = Math.round(obj.val) + (i < 2 || i === 3 ? '+' : '')
+              v: [1200, 450, 12, 168][i],
+              duration: 1, ease: 'power2.out',
+              onUpdate: () => document.querySelector(el).textContent = Math.round(obj.v) + (i !== 1 ? '+' : '')
             });
           });
-          gsap.to('#specs h2, #specs .text-center', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 });
+          gsap.to('#stats h2, #stats .text-center', { opacity: 1, y: 0, stagger: 0.08, duration: 0.5 });
         }
       });
 
       // Gallery
       ScrollTrigger.create({
         trigger: '#gallery',
-        start: 'top 85%',
+        start: 'top 88%',
         onEnter: () => {
           gsap.to('#gallery h2, #gallery p', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 });
-          gsap.to('#gallery img', { opacity: 1, y: 0, rotation: 0, stagger: 0.1, duration: 0.7, ease: 'back.out(1.7)' });
+          gsap.to('#gal-1, #gal-2, #gal-3', { opacity: 1, y: 0, stagger: 0.1, duration: 0.7 });
         }
       });
 
       // Technology
       ScrollTrigger.create({
         trigger: '#technology',
-        start: 'top 85%',
+        start: 'top 88%',
         onEnter: () => {
           gsap.to('#technology > div > *', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 });
         }
@@ -367,34 +316,30 @@
       // Testimonials
       ScrollTrigger.create({
         trigger: '#testimonials',
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to('#testimonials .glass-card', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' });
-        }
+        start: 'top 88%',
+        onEnter: () => gsap.to('#testimonials .glass-card', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' })
       });
 
       // Pricing
       ScrollTrigger.create({
         trigger: '#pricing',
-        start: 'top 85%',
+        start: 'top 88%',
         onEnter: () => {
           gsap.to('#pricing h2', { opacity: 1, y: 0, duration: 0.4 });
-          gsap.to('.glass-card .text-center', { opacity: 1, y: 0, stagger: 0.1, duration: 0.4 });
+          gsap.to('#pricing .glass-card', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 });
         }
       });
 
       // CTA
       ScrollTrigger.create({
         trigger: '#cta',
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to('#cta h2, #cta p, #cta > div', { opacity: 1, y: 0, stagger: 0.15, duration: 0.5 });
-        }
+        start: 'top 88%',
+        onEnter: () => gsap.to('#cta > *', { opacity: 1, y: 0, stagger: 0.15, duration: 0.5 })
       });
 
-      // Navigation dots
-      const sections = ['main-container', 'how-it-works', 'specs', 'gallery', 'technology', 'testimonials', 'pricing', 'cta'];
-      dots.forEach((dot, i) => {
+      // Navigation
+      const sections = ['hero-section', 'how-it-works', 'stats', 'gallery', 'technology', 'testimonials', 'pricing', 'cta'];
+      document.querySelectorAll('.nav-dot').forEach((dot, i) => {
         dot.addEventListener('click', () => {
           const el = document.getElementById(sections[i]);
           if (el) gsap.to(window, { scrollTo: el.offsetTop, duration: 0.7, ease: 'power3.inOut' });
