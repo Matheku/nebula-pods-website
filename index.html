@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebula Pods - Smart Air Atmosphere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: '#0a0f1a',
+            nebula: '#6366f1',
+            cosmos: '#8b5cf6',
+            aurora: '#06b6d4',
+            starlight: '#f8fafc'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0a0f1a;
+      color: #f8fafc;
+    }
+    .gradient-bg {
+      background: radial-gradient(ellipse at top left, rgba(99,102,241,0.15), transparent 50%),
+                  radial-gradient(ellipse at bottom right, rgba(139,92,246,0.1), transparent 50%);
+    }
+    .sticky-section {
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow: hidden;
+    }
+    .parallax-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .content-layer {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 10;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(99,102,241,0.2);
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 1000;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .neon-glow {
+      box-shadow: 0 0 30px rgba(99,102,241,0.3);
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(99,102,241,0.5);
+    }
+    @media (max-width: 767px) {
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="gradient-bg">
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+
+  <!-- Navigation dots -->
+  <div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-50 glass-card px-6 py-3 rounded-full" id="nav-dots">
+    <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 dot-btn active" data-section="0"></button>
+    <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 dot-btn" data-section="1"></button>
+    <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 dot-btn" data-section="2"></button>
+    <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 dot-btn" data-section="3"></button>
+    <button class="w-3 h-3 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 dot-btn" data-section="4"></button>
+  </div>
+
+  <!-- Hero Section - Pinned with fade -->
+  <section class="sticky-section" id="hero">
+    <div class="parallax-layer" id="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1517842461903-4a950a8d0c10?auto=format&fit=crop&w=2000&q=90'); opacity: 0.3;"></div>
+    <div class="content-layer">
+      <div class="text-center max-w-4xl">
+        <div class="mb-8 opacity-0" id="hero-product">
+          <div class="w-64 h-64 mx-auto rounded-full bg-gradient-to-br from-nebula via-cosmos to-aurora p-1 neon-glow">
+            <div class="w-full h-full rounded-full bg-void flex items-center justify-center">
+              <svg class="w-32 h-32 text-nebula" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 20 L50 25 M50 55 L50 80 M20 50 L25 50 M55 50 L80 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black mb-6 opacity-0 text-glow" id="hero-title">
+          Nebula Pods
+        </h1>
+        <p class="text-xl md:text-2xl text-starlight/70 mb-8 opacity-0 max-w-2xl mx-auto" id="hero-subtitle">
+          The future of air. Intelligent purification that adapts to your space, your mood, your atmosphere.
+        </p>
+        <div class="opacity-0" id="hero-cta">
+          <button class="px-8 py-4 rounded-full bg-gradient-to-r from-nebula to-cosmos font-semibold text-lg hover:scale-105 transition-transform">
+            Experience the Future
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="relative h-screen flex items-center justify-center" id="features-trigger">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 opacity-0" id="features-title">Intelligent Features</h2>
+      <div class="feature-grid">
+        <div class="glass-card p-8 rounded-3xl opacity-0 translate-y-10" id="feature-1">
+          <div class="w-14 h-14 rounded-full bg-nebula/20 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-nebula" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.667 17l-4.333-2.5V9.5L9.667 7v10z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.333 17l4.333-2.5V9.5L14.333 7v10z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Biometric Sensing</h3>
+          <p class="text-starlight/60">Reads your body's micro-signals to adjust air composition in real-time.</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl opacity-0 translate-y-10" id="feature-2">
+          <div class="w-14 h-14 rounded-full bg-cosmos/20 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-cosmos" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-1.214M6.343 17.657l-.707-1.214m12.728 0l-.707 1.214M6.343 6.364l-.707 1.214M16 12a4 4 0 11-8 0 4 4 0 111 0 11z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Circadian Rhythm</h3>
+          <p class="text-starlight/60">Hormone-optimizing light spectrum synced to your sleep cycle.</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl opacity-0 translate-y-10" id="feature-3">
+          <div class="w-14 h-14 rounded-full bg-aurora/20 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-aurora" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11V10a1 1 0 011 1v10a1 1 0 01-1 1h-3m-6 0h6"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Adaptive Diffusion</h3>
+          <p class="text-starlight/60">360° molecular dispersal with room mapping technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works - Pinned Section -->
+  <section class="sticky-section" id="how-it-works">
+    <div class="relative h-full">
+      <!-- Product image that stays pinned -->
+      <div class="absolute inset-0 flex items-center justify-center" id="product-display">
+        <div class="relative w-96 h-96">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-r from-nebula to-cosmos opacity-20 blur-3xl animate-pulse"></div>
+          <div class="relative w-full h-full rounded-full bg-void border border-white/10 flex items-center justify-center neon-glow">
+            <svg class="w-48 h-48 text-nebula" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <path d="M50 15 L50 85 M15 50 L85 50" stroke="currentColor" stroke-width="2"/>
+              <circle cx="50" cy="30" r="4" fill="currentColor"/>
+              <circle cx="50" cy="50" r="6" fill="currentColor"/>
+              <circle cx="50" cy="70" r="4" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlay steps -->
+      <div class="content-layer">
+        <div class="max-w-md text-right translate-x-full opacity-0" id="step-1">
+          <h3 class="text-2xl font-bold mb-2 text-nebula">Sense</h3>
+          <p class="text-starlight/70">AI analyzes air quality 1000× per second</p>
+        </div>
+      </div>
+      <div class="content-layer">
+        <div class="max-w-md text-left -translate-x-full opacity-0" id="step-2">
+          <h3 class="text-2xl font-bold mb-2 text-cosmos">Purify</h3>
+          <p class="text-starlight/70">Molecular filtration removes 99.97% of pollutants</p>
+        </div>
+      </div>
+      <div class="content-layer">
+        <div class="max-w-md text-right translate-x-full opacity-0" id="step-3">
+          <h3 class="text-2xl font-bold mb-2 text-aurora">Harmonize</h3>
+          <p class="text-starlight/70">Ambient light matches your circadian rhythm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs Section with Counters -->
+  <section class="h-screen flex items-center justify-center" id="specs">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 opacity-0">Technical Specs</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center opacity-0 translate-y-10" id="spec-1">
+          <div class="text-5xl font-black text-nebula mb-2 font-mono" id="counter-1">0</div>
+          <p class="text-starlight/60">SQ FT Coverage</p>
+        </div>
+        <div class="text-center opacity-0 translate-y-10" id="spec-2">
+          <div class="text-5xl font-black text-cosmos mb-2 font-mono" id="counter-2">0</div>
+          <p class="text-starlight/60">CFM Airflow</p>
+        </div>
+        <div class="text-center opacity-0 translate-y-10" id="spec-3">
+          <div class="text-5xl font-black text-aurora mb-2 font-mono" id="counter-3">0</div>
+          <p class="text-starlight/60">Sensors</p>
+        </div>
+        <div class="text-center opacity-0 translate-y-10" id="spec-4">
+          <div class="text-5xl font-black text-purple-400 mb-2 font-mono" id="counter-4">0</div>
+          <p class="text-starlight/60">Hours Runtime</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="h-screen flex items-center justify-center bg-gradient-to-t from-void via-nebula/10 to-void/50" id="cta">
+    <div class="text-center max-w-2xl px-6">
+      <h2 class="text-4xl md:text-6xl font-black mb-6 opacity-0">Transform Your Atmosphere</h2>
+      <p class="text-xl text-starlight/70 mb-8 opacity-0">Pre-order now and receive 20% off launch pricing.</p>
+      <div class="opacity-0" id="cta-btn">
+        <button class="px-12 py-5 rounded-full bg-gradient-to-r from-nebula via-cosmos to-aurora font-bold text-lg neon-glow hover:scale-105 transition-transform">
+          Reserve Your Pod
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // Progress bar update
+    const progressBar = document.getElementById('progress-bar');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+          progressBar.style.transform = `scaleX(${progress})`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const dots = document.querySelectorAll('.dot-btn');
+      const sections = ['hero', 'features-trigger', 'how-it-works', 'specs', 'cta'];
+
+      // Hero animations - staggered fade in
+      gsap.timeline()
+        .to('#hero-product', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+        .to('#hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .to('#hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.3');
+
+      // Features section - fade in with stagger
+      ScrollTrigger.create({
+        trigger: '#features-trigger',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to('#features-title', { opacity: 1, y: 0, duration: 0.8 });
+          gsap.to('#feature-1', { opacity: 1, y: 0, duration: 0.8, delay: 0.1, ease: 'power3.out' });
+          gsap.to('#feature-2', { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+          gsap.to('#feature-3', { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' });
+        }
+      });
+
+      // How It Works - pinned steps animation
+      ScrollTrigger.create({
+        trigger: '#how-it-works',
+        start: 'top top',
+        end: 'bottom top',
+        pin: '#product-display',
+        anticipatePin: 1
+      });
+
+      // Step overlays with scroll progress
+      const steps = ['#step-1', '#step-2', '#step-3'];
+      const stepsTrigger = ScrollTrigger.create({
+        trigger: '#how-it-works',
+        start: 'top top',
+        end: 'bottom top',
+        onUpdate: (self) => {
+          const progress = self.progress;
+          steps.forEach((step, i) => {
+            const stepProgress = progress * 3 - i;
+            const opacity = Math.max(0, Math.min(1, 1 - Math.abs(stepProgress)));
+            const x = i % 2 === 0 ? (stepProgress > 0 ? '0' : '100%') : (stepProgress > 0 ? '0' : '-100%');
+            gsap.set(step, {
+              opacity: opacity,
+              x: x,
+              ease: 'none'
+            });
+          });
+        }
+      });
+
+      // Specs section - counter animations
+      const counters = [
+        { el: '#counter-1', value: 1200, suffix: '+' },
+        { el: '#counter-2', value: 450, suffix: '' },
+        { el: '#counter-3', value: 12, suffix: '+' },
+        { el: '#counter-4', value: 168, suffix: '' }
+      ];
+
+      ScrollTrigger.create({
+        trigger: '#specs',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to('#specs h2', { opacity: 1, y: 0, duration: 0.8 });
+          counters.forEach((counter, i) => {
+            gsap.to(counter.el, {
+              innerHTML: counter.value + counter.suffix,
+              duration: 2,
+              delay: i * 0.1,
+              snap: { innerHTML: 1 },
+              ease: 'power2.out'
+            });
+          });
+          gsap.to('#spec-1, #spec-2, #spec-3, #spec-4', {
+            opacity: 1,
+            y: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power3.out'
+          });
+        }
+      });
+
+      // CTA section
+      ScrollTrigger.create({
+        trigger: '#cta',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to('#cta h2, #cta p, #cta-btn', {
+            opacity: 1,
+            y: 0,
+            stagger: 0.2,
+            duration: 0.8,
+            ease: 'power3.out'
+          });
+        }
+      });
+
+      // Dot navigation
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          const section = document.getElementById(sections[i]);
+          gsap.to(window, {
+            scrollTo: { y: section.offsetTop },
+            duration: 1,
+            ease: 'power3.inOut'
+          });
+          updateDots(i);
+        });
+      });
+
+      // Update dots on scroll
+      let currentSection = 0;
+      const allSections = ['hero', 'features-trigger', 'how-it-works', 'specs', 'cta'].map(id => document.getElementById(id));
+
+      ScrollTrigger.create({
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+          const scrollY = window.scrollY;
+          allSections.forEach((section, i) => {
+            if (section && scrollY >= section.offsetTop - 100) {
+              currentSection = i;
+              updateDots(i);
+            }
+          });
+        }
+      });
+
+      function updateDots(activeIndex) {
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === activeIndex);
+          dot.classList.toggle('bg-nebula', i === activeIndex);
+          dot.classList.toggle('bg-white/20', i !== activeIndex);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
